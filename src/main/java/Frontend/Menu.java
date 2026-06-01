@@ -1,7 +1,6 @@
 package Frontend;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,16 +13,43 @@ public class Menu extends JFrame implements ActionListener{
     public Menu() {
         this.setLayout(null);
 
-
-        java.net.URL imgURL = Menu.class.getResource("/Expendedora.png");
+        //Imagen expendedora
+        java.net.URL imgURL = getClass().getResource("/Expendedora.png");
 
         if(imgURL != null) {
             ImageIcon img = new ImageIcon(imgURL);
-            JLabel imgLabel = new JLabel();
-            imgLabel.setIcon(img);
-            imgLabel.setBounds(150, 150, 100,50);
-            imgLabel.setVisible(true);
+
+            Image imgEscalada = img.getImage().getScaledInstance(300, 400, Image.SCALE_SMOOTH);
+
+            ImageIcon imgExp = new ImageIcon(imgEscalada);
+
+            JLabel imgLabel = new JLabel(imgExp);
+
+            imgLabel.setBounds(250, 150, 300, 400);
+
+            this.add(imgLabel);
         }
+
+        else{
+            System.out.println("Error al encontrar la imagen de la expendedora...");
+        }
+
+        //Imagen expendedora logo
+
+        java.net.URL imgURL1 = getClass().getResource("/Exp_Frontal.png");
+
+        if(imgURL1 != null) {
+
+            ImageIcon imgicono = new ImageIcon(imgURL1);
+            this.setIconImage(imgicono.getImage());
+        }
+
+        else{
+            System.out.println("Error al encontrar la imagen de la expendedora frontal...");
+        }
+
+
+
 
         this.setTitle("Menu Principal");
         this.setSize(800, 800);
@@ -33,22 +59,87 @@ public class Menu extends JFrame implements ActionListener{
 
         ImageIcon icon = new ImageIcon("Expendedora.png");
         this.setIconImage(icon.getImage());
-        this.getContentPane().setBackground(new Color(255, 255, 255));
+        this.getContentPane().setBackground(new Color(245, 245, 247));
         this.setLocationRelativeTo(null);
 
+
+        //Boton
         inicio = new JButton();
-        inicio.setBounds(278, 500, 250, 100);
+        inicio.setBounds(278, 600, 250, 100);
         inicio.addActionListener(this);
         inicio.setText("Iniciar Expendedora");
         inicio.setFocusable(false);
-        inicio.setFont(new Font("Inter", Font.BOLD, 20));
         inicio.setHorizontalAlignment(SwingConstants.CENTER);
-        inicio.setVerticalAlignment(SwingConstants.BOTTOM);
+        inicio.setVerticalAlignment(SwingConstants.CENTER);
+        inicio.setMargin(new Insets(0, 0 ,0 ,0));
         inicio.setBorder(BorderFactory.createEtchedBorder());
-        inicio.setForeground(new Color(253, 76, 76));
-        inicio.setBackground(new Color(55, 255, 148));
-        this.add(inicio);
+        inicio.setForeground(new Color(255, 255, 255));
+        inicio.setBackground(new Color(30, 30, 30));
+        inicio.setBorderPainted(false);
+        inicio.setFocusPainted(false);
+        inicio.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        inicio.setHorizontalTextPosition(SwingConstants.CENTER);
+        inicio.setVerticalTextPosition(SwingConstants.TOP);
+        inicio.setIconTextGap(8);
+
+
+        //Imagen boton play
+
+        java.net.URL img1 = getClass().getResource("/Boton_Play.png");
+
+        if(img1 != null) {
+
+            ImageIcon imgp = new ImageIcon(img1);
+
+            Image img1Escalada = imgp.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+
+            inicio.setIcon(new ImageIcon(img1Escalada));
+
+        }
+
+        else{
+            System.out.println("Error al encontrar la imagen del boton play...");
+        }
+
+        //Verificacion del font para el boton del menu
+
+        try{
+            java.io.InputStream is = getClass().getResourceAsStream("/Poppins-Bold.ttf");
+
+            if(is != null) {
+
+                Font fontBase = Font.createFont(Font.TRUETYPE_FONT, is);
+
+                Font fontBotonMenu = fontBase.deriveFont(Font.BOLD, 20f);
+
+                inicio.setFont(fontBotonMenu);
+
+            }
+
+            else{
+                System.out.println("Error al encontrar el font Poppins-Bold.ttf...");
+            }
+
+        }
+
+        catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error inesperado intentalo denuevo...");
+            inicio.setFont(new Font("Arial", Font.BOLD, 20)); //Font predeterminado en caso de que no encuentre el archivo
+        }
+
+
+        inicio.addMouseListener(new java.awt.event.MouseAdapter() {
+
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                inicio.setBackground(new Color(70, 70, 70));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                inicio.setBackground(new Color(30, 30, 30));
+            }
+        });
 
 
 
@@ -56,12 +147,14 @@ public class Menu extends JFrame implements ActionListener{
         label.setText("Simulación Maquina Expendedora");
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setVerticalAlignment(JLabel.TOP);
-        label.setForeground(new Color(51, 163, 243));
+        label.setForeground(new Color(50, 50, 50));
         label.setFont(new Font("Inter", Font.BOLD, 30));
         label.setBounds(0, 50, 800, 100);
         label.setVisible(true);
 
 
+        //Agregracion de las cosas al panel
+        this.add(inicio);
         this.add(label);
         this.setVisible(true);
 
