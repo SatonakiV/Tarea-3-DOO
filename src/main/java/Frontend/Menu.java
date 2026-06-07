@@ -165,6 +165,7 @@ public class Menu extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == inicio){
             this.dispose();
+            new Ventana();
 
         }
 
