@@ -22,7 +22,7 @@ public class PanelExpendedor {
         if (imagenMaquina != null) {
             g.drawImage(imagenMaquina, 50, 20, 420, 620, null);
         } else {
-            g.setColor(new Color(90, 92, 92))
+            g.setColor(new Color(90, 92, 92));
             g.fillRect(50, 50, 400, 550);
         }
     }
