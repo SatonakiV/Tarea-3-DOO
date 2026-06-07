@@ -5,6 +5,8 @@ import java.awt.*;
 
 public class PanelComprador {
     private int menuActual = 0;
+    private int hoverBoton = 0;
+
     private Image imagenBotonMenu;
     private Image imagenCoca, imagenPepsi, imagenSprite, imagenFanta, imagenKem;
     private Image imagenSuper8, imagenSnickers, imagenOrbit, imagenKitkat, imagenChocman;
@@ -51,36 +53,49 @@ public class PanelComprador {
         g.setFont(new Font("Arial", Font.BOLD, 22));
 
         g.drawImage(imagenBotonMenu, 570, 120, 340, 150, null);
+        if(hoverBoton == 1) {
+            g.setColor(new Color(255, 255, 255, 60));
+            g.fillRoundRect(570, 120, 340, 150, 30, 30);
+        }
+
         g.setColor(Color.WHITE);
         g.drawString("Bebestibles", 678, 200);
 
         g.drawImage(imagenBotonMenu, 570, 290, 340, 150, null);
+        if(hoverBoton == 2) {
+            g.setColor(new Color(255, 255, 255, 60));
+            g.fillRoundRect(570, 290, 340, 150, 30, 30);
+        }
         g.setColor(Color.WHITE);
         g.drawString("Dulces", 700, 370);
     }
 
     private void dibujarMenuBebestibles(Graphics g) {
-        dibujarProducto(g, imagenCoca, "CocaCola", "$1500", 570, 120, false);
-        dibujarProducto(g, imagenPepsi, "Pepsi", "$1500", 690, 120, false);
-        dibujarProducto(g, imagenSprite, "Sprite", "$1500", 810, 120, false);
+        dibujarProducto(g, imagenCoca, "CocaCola", "$1500", 570, 120, false, hoverBoton == 1);
+        dibujarProducto(g, imagenPepsi, "Pepsi", "$1500", 690, 120, false, hoverBoton == 2);
+        dibujarProducto(g, imagenSprite, "Sprite", "$1500", 810, 120, false,  hoverBoton == 3);
 
-        dibujarProducto(g, imagenFanta, "Fanta", "$1500", 630, 280, false);
-        dibujarProducto(g, imagenKem, "Kem", "$1500", 750, 280, false);
+        dibujarProducto(g, imagenFanta, "Fanta", "$1500", 630, 280, false, hoverBoton == 4);
+        dibujarProducto(g, imagenKem, "Kem", "$1500", 750, 280, false,  hoverBoton == 5);
 
         dibujarBotonVolver(g);
     }
 
     private void dibujarMenuDulces(Graphics g) {
-        dibujarProducto(g, imagenSuper8, "Super 8", "$600", 570, 120, true);
-        dibujarProducto(g, imagenSnickers, "Snickers", "$1200", 690, 120, true);
-        dibujarProducto(g, imagenOrbit, "Orbit", "$1000", 810, 120, true);
-        dibujarProducto(g, imagenKitkat, "Kitkat", "$1200", 630, 280, true);
-        dibujarProducto(g, imagenChocman, "Chocman", "$600", 750, 280, true);
+        dibujarProducto(g, imagenSuper8, "Super 8", "$600", 570, 120, true,hoverBoton == 1);
+        dibujarProducto(g, imagenSnickers, "Snickers", "$1200", 690, 120, true, hoverBoton == 2);
+        dibujarProducto(g, imagenOrbit, "Orbit", "$1000", 810, 120, true, hoverBoton == 3);
+        dibujarProducto(g, imagenKitkat, "Kitkat", "$1200", 630, 280, true,hoverBoton == 4);
+        dibujarProducto(g, imagenChocman, "Chocman", "$600", 750, 280, true, hoverBoton == 5);
 
         dibujarBotonVolver(g);
     }
 
-    private void dibujarProducto(Graphics g, Image imagen, String nombre, String precio, int x, int y, boolean esDulce) {
+    private void dibujarProducto(Graphics g, Image imagen, String nombre, String precio, int x, int y, boolean esDulce, boolean hovered) {
+
+        g.setColor(hovered ? new Color(245, 245, 250) : Color.white);
+        g.fillRoundRect(x, y, 80, 140, 15, 15);
+
         g.setColor(Color.WHITE);
         g.fillRoundRect(x, y, 80, 140, 15, 15);
 
@@ -104,10 +119,49 @@ public class PanelComprador {
 
     private void dibujarBotonVolver(Graphics g) {
         g.setFont(new Font("Arial", Font.BOLD, 16));
+
+        g.setColor(hoverBoton == 6 ? new Color(130, 130, 130) : Color.DARK_GRAY);
         g.setColor(Color.DARK_GRAY);
         g.fillRoundRect(580, 480, 320, 50, 15, 15);
         g.setColor(Color.WHITE);
         g.drawString("<- Volver al menú principal", 630, 510);
+    }
+
+    public boolean actualizarHover(int x, int y) {
+        hoverBoton = 0;
+
+        if(menuActual == 0) {
+            if (x >= 570 && x <= 990 && y >= 120 && y <= 250) {
+                hoverBoton = 1;
+            } else if (x >= 570 && x <= 990 && y >= 290 && y <= 440) {
+                hoverBoton = 2;
+            }
+        }
+        else if(menuActual == 1 || menuActual == 2){
+            if(x >= 570  && x <= 650 && y >= 120 && y <= 260){
+                hoverBoton = 1;
+            }
+            else if(x >= 690  && x <= 770 && y >= 120 && y <= 260){
+                hoverBoton = 2;
+            }
+            else if(x >= 810  && x <= 890 && y >= 120 && y <= 260){
+                hoverBoton = 3;
+            }
+            else if(x >= 630  && x <= 710 && y >= 280 && y <= 420){
+                hoverBoton = 4;
+            }
+            else if (x >= 750  && x <= 830 && y >= 280 && y <= 420){
+                hoverBoton = 5;
+            }
+
+            if(x >= 580  && x <= 900 && y >= 480 && y <= 530){
+                hoverBoton = 1;
+            }
+
+        }
+
+        return hoverBoton != 0;
+
     }
 
     public void procesarClic(int x, int y) {
