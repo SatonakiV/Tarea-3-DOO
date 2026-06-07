@@ -5,13 +5,31 @@ import java.awt.*;
 
 public class PanelComprador {
     private int menuActual = 0;
-    private Image imgBotonMenu;
+    private Image imagenBotonMenu;
+    private Image imagenCoca, imagenPepsi, imagenSprite, imagenFanta, imagenKem;
+    private Image imagenSuper8, imagenSnickers, imagenOrbit, imagenKitkat, imagenChocman;
 
     public PanelComprador() {
-        imgBotonMenu = new ImageIcon(getClass().getResource("/boton2.png")).getImage();
+        imagenBotonMenu = new ImageIcon(getClass().getResource("/boton2.png")).getImage();
+
+        imagenCoca = new ImageIcon(getClass().getResource("/cocacola.png")).getImage();
+        imagenPepsi = new ImageIcon(getClass().getResource("/pepsi.png")).getImage();
+        imagenSprite = new ImageIcon(getClass().getResource("/sprite.png")).getImage();
+        imagenFanta = new ImageIcon(getClass().getResource("/fanta.png")).getImage();
+        imagenKem = new ImageIcon(getClass().getResource("/kem.png")).getImage();
+
+        imagenSuper8 = new ImageIcon(getClass().getResource("/super8.png")).getImage();
+        imagenSnickers = new ImageIcon(getClass().getResource("/snickers.png")).getImage();
+        imagenOrbit = new ImageIcon(getClass().getResource("/orbit.png")).getImage();
+        imagenKitkat = new ImageIcon(getClass().getResource("/kitkat.png")).getImage();
+        imagenChocman = new ImageIcon(getClass().getResource("/chocman.png")).getImage();
     }
 
     public void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g; //tipo modo hd, es un suavizado de bordes e imagenes
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
         g.setColor(new Color(230, 230, 230));
         g.fillRoundRect(530, 30, 420, 600, 25, 25);
 
@@ -29,69 +47,59 @@ public class PanelComprador {
     }
 
     private void dibujarMenuPrincipal(Graphics g) {
+
         g.setFont(new Font("Arial", Font.BOLD, 22));
 
-        //BOTÓN 1: BEBESTIBLES
-        g.drawImage(imgBotonMenu, 570, 120, 340, 150, null);
+        g.drawImage(imagenBotonMenu, 570, 120, 340, 150, null);
         g.setColor(Color.WHITE);
         g.drawString("Bebestibles", 678, 200);
 
-        //BOTÓN 2: DULCES
-        g.drawImage(imgBotonMenu, 570, 290, 340, 150, null);
+        g.drawImage(imagenBotonMenu, 570, 290, 340, 150, null);
         g.setColor(Color.WHITE);
         g.drawString("Dulces", 700, 370);
     }
 
     private void dibujarMenuBebestibles(Graphics g) {
-        g.setFont(new Font("Arial", Font.BOLD, 14));
+        dibujarProducto(g, imagenCoca, "CocaCola", "$1500", 570, 120, false);
+        dibujarProducto(g, imagenPepsi, "Pepsi", "$1500", 690, 120, false);
+        dibujarProducto(g, imagenSprite, "Sprite", "$1500", 810, 120, false);
 
-        g.setColor(new Color(254, 0, 26));
-        g.fillRoundRect(580, 130, 120, 40, 15, 15);
-        g.setColor(Color.WHITE); g.drawString("CocaCola", 605, 155);
-
-        g.setColor(new Color(28, 82, 162));
-        g.fillRoundRect(580, 190, 120, 40, 15, 15);
-        g.setColor(Color.WHITE); g.drawString("Pepsi", 620, 215);
-
-        g.setColor(new Color(0, 139, 71));
-        g.fillRoundRect(580, 250, 120, 40, 15, 15);
-        g.setColor(Color.WHITE); g.drawString("Sprite", 615, 275);
-
-        g.setColor(new Color(255, 165, 0));
-        g.fillRoundRect(740, 130, 120, 40, 15, 15);
-        g.setColor(Color.BLACK); g.drawString("Fanta", 780, 155);
-
-        g.setColor(new Color(255, 215, 0));
-        g.fillRoundRect(740, 190, 120, 40, 15, 15);
-        g.setColor(Color.BLACK); g.drawString("Kem", 785, 215);
+        dibujarProducto(g, imagenFanta, "Fanta", "$1500", 630, 280, false);
+        dibujarProducto(g, imagenKem, "Kem", "$1500", 750, 280, false);
 
         dibujarBotonVolver(g);
     }
 
     private void dibujarMenuDulces(Graphics g) {
-        g.setFont(new Font("Arial", Font.BOLD, 14));
-
-        g.setColor(new Color(255, 200, 0));
-        g.fillRoundRect(580, 130, 120, 40, 15, 15);
-        g.setColor(Color.BLACK); g.drawString("Super 8", 610, 155);
-
-        g.setColor(new Color(128, 64, 8));
-        g.fillRoundRect(580, 190, 120, 40, 15, 15);
-        g.setColor(Color.WHITE); g.drawString("Snickers", 610, 215);
-
-        g.setColor(new Color(224, 36, 199));
-        g.fillRoundRect(580, 250, 120, 40, 15, 15);
-        g.setColor(Color.BLACK); g.drawString("Chicle", 615, 275);
-
-        g.setColor(new Color(210, 20, 30));
-        g.fillRoundRect(740, 130, 120, 40, 15, 15);
-        g.setColor(Color.WHITE); g.drawString("Kitkat", 780, 155);
-
-        g.setColor(new Color(17, 68, 238));
-        g.fillRoundRect(740, 190, 120, 40, 15, 15);
-        g.setColor(Color.WHITE); g.drawString("Chocman", 765, 215);
+        dibujarProducto(g, imagenSuper8, "Super 8", "$600", 570, 120, true);
+        dibujarProducto(g, imagenSnickers, "Snickers", "$1200", 690, 120, true);
+        dibujarProducto(g, imagenOrbit, "Orbit", "$1000", 810, 120, true);
+        dibujarProducto(g, imagenKitkat, "Kitkat", "$1200", 630, 280, true);
+        dibujarProducto(g, imagenChocman, "Chocman", "$600", 750, 280, true);
 
         dibujarBotonVolver(g);
+    }
+
+    private void dibujarProducto(Graphics g, Image imagen, String nombre, String precio, int x, int y, boolean esDulce) {
+        g.setColor(Color.WHITE);
+        g.fillRoundRect(x, y, 80, 140, 15, 15);
+
+        g.setColor(Color.LIGHT_GRAY);
+        g.drawRoundRect(x, y, 80, 140, 15, 15);
+
+        if (esDulce) {
+            g.drawImage(imagen, x + 5, y + 25, 70, 40, null);
+        } else {
+            g.drawImage(imagen, x + 10, y + 5, 60, 90, null);
+        }
+
+        g.setFont(new Font("Arial", Font.BOLD, 12));
+        g.setColor(Color.BLACK);
+        g.drawString(nombre, x + 10, y + 115);
+
+        g.setFont(new Font("Arial", Font.BOLD, 13));
+        g.setColor(new Color(0, 100, 0));
+        g.drawString(precio, x + 18, y + 135);
     }
 
     private void dibujarBotonVolver(Graphics g) {
@@ -111,20 +119,20 @@ public class PanelComprador {
             }
         }
         else if (menuActual == 1) {
-            if (x >= 580 && x <= 700 && y >= 130 && y <= 170) System.out.println("Elegiste CocaCola");
-            if (x >= 580 && x <= 700 && y >= 190 && y <= 230) System.out.println("Elegiste Pepsi");
-            if (x >= 580 && x <= 700 && y >= 250 && y <= 290) System.out.println("Elegiste Sprite");
-            if (x >= 740 && x <= 860 && y >= 130 && y <= 170) System.out.println("Elegiste Fanta");
-            if (x >= 740 && x <= 860 && y >= 190 && y <= 230) System.out.println("Elegiste Kem");
+            if (x >= 570 && x <= 650 && y >= 120 && y <= 260) System.out.println("Elegiste CocaCola");
+            if (x >= 690 && x <= 770 && y >= 120 && y <= 260) System.out.println("Elegiste Pepsi");
+            if (x >= 810 && x <= 890 && y >= 120 && y <= 260) System.out.println("Elegiste Sprite");
+            if (x >= 630 && x <= 710 && y >= 280 && y <= 420) System.out.println("Elegiste Fanta");
+            if (x >= 750 && x <= 830 && y >= 280 && y <= 420) System.out.println("Elegiste Kem");
 
             if (x >= 580 && x <= 900 && y >= 480 && y <= 530) menuActual = 0;
         }
         else if (menuActual == 2) {
-            if (x >= 580 && x <= 700 && y >= 130 && y <= 170) System.out.println("Elegiste Super 8");
-            if (x >= 580 && x <= 700 && y >= 190 && y <= 230) System.out.println("Elegiste Snickers");
-            if (x >= 580 && x <= 700 && y >= 250 && y <= 290) System.out.println("Elegiste Chicle");
-            if (x >= 740 && x <= 860 && y >= 130 && y <= 170) System.out.println("Elegiste Kitkat");
-            if (x >= 740 && x <= 860 && y >= 190 && y <= 230) System.out.println("Elegiste Chocman");
+            if (x >= 570 && x <= 650 && y >= 120 && y <= 260) System.out.println("Elegiste Super 8");
+            if (x >= 690 && x <= 770 && y >= 120 && y <= 260) System.out.println("Elegiste Snickers");
+            if (x >= 810 && x <= 890 && y >= 120 && y <= 260) System.out.println("Elegiste Orbit");
+            if (x >= 630 && x <= 710 && y >= 280 && y <= 420) System.out.println("Elegiste Kitkat");
+            if (x >= 750 && x <= 830 && y >= 280 && y <= 420) System.out.println("Elegiste Chocman");
 
             if (x >= 580 && x <= 900 && y >= 480 && y <= 530) menuActual = 0;
         }
