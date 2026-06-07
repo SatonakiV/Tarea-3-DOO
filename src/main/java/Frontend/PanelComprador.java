@@ -34,12 +34,12 @@ public class PanelComprador {
         //BOTÓN 1: BEBESTIBLES
         g.drawImage(imgBotonMenu, 570, 120, 340, 150, null);
         g.setColor(Color.WHITE);
-        g.drawString("Bebestibles", 670, 200);
+        g.drawString("Bebestibles", 678, 200);
 
         //BOTÓN 2: DULCES
         g.drawImage(imgBotonMenu, 570, 290, 340, 150, null);
         g.setColor(Color.WHITE);
-        g.drawString("Dulces", 695, 370);
+        g.drawString("Dulces", 700, 370);
     }
 
     private void dibujarMenuBebestibles(Graphics g) {
