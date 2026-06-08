@@ -5,6 +5,11 @@ package Backend;
  * Hereda de la clase Producto y sirve como base para los distintos tipos de golosinas disponibles.
  */
 abstract class Dulce extends Producto {
+    /**
+     * Construye un nuevo dulce con un número de serie único.
+     *
+     * @param serie El número de serie que identifica al dulce.
+     */
     public Dulce(int serie) {
         super(serie);
     }

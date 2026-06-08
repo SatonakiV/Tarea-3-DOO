@@ -5,6 +5,11 @@ package Backend;
  */
 class Kitkat extends Dulce {
 
+    /**
+     * Construye una nueva instancia de Kitkat con un número de serie único.
+     *
+     * @param serie El número de serie que identifica a este Kitkat.
+     */
     public Kitkat(int serie) {
         super(serie);
     }

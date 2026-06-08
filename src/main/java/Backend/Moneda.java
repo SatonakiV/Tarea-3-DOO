@@ -11,12 +11,18 @@ public abstract class Moneda implements Comparable<Moneda> {
 
     /**
      * Construye una nueva moneda como base.
+     *
+     * @param serie El número de serie que identifica a la moneda.
      */
-
     public Moneda(int serie) {
         this.serie = serie;
     }
 
+    /**
+     * Obtiene el número de serie de esta moneda.
+     *
+     * @return El número de serie de la moneda.
+     */
     public int getSeries(){
         return serie;
     }

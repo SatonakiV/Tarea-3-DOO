@@ -133,6 +133,12 @@ public class Expendedor {
 
     }
 
+    /**
+     * Obtiene el producto comprado que fue almacenado en el depósito único de salida.
+     * Al extraerlo, el depósito queda vacío nuevamente.
+     *
+     * @return El producto comprado, o null si no hay ningún producto disponible.
+     */
     public Producto getProducto() {
         return deposito.getProducto();
     }

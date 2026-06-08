@@ -6,6 +6,11 @@ package Backend;
  */
 abstract class Bebida extends Producto {
 
+    /**
+     * Construye una nueva bebida con un número de serie único.
+     *
+     * @param serie El número de serie que identifica a la bebida.
+     */
     public Bebida(int serie) {
         super(serie);
     }

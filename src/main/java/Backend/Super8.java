@@ -5,6 +5,11 @@ package Backend;
  */
 class Super8 extends Dulce {
 
+    /**
+     * Construye una nueva instancia de Super8 con un número de serie único.
+     *
+     * @param serie El número de serie que identifica a este Super8.
+     */
     public Super8(int serie) {
         super(serie);
     }

@@ -26,12 +26,13 @@ public enum Precios {
      */
     Precios(int precio) {
         this.precio = precio;
-/**
- * Sirve para ver cuánto cuesta el producto que elegimos.
- *
- * @return El precio del producto en números enteros.
- */
     }
+
+    /**
+     * Sirve para ver cuánto cuesta el producto que elegimos.
+     *
+     * @return El precio del producto en números enteros.
+     */
     public int getPrecio() {
         return precio;
     }

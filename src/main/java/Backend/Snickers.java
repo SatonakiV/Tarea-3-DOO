@@ -5,6 +5,11 @@ package Backend;
  */
 class Snickers extends Dulce {
 
+    /**
+     * Construye una nueva instancia de Snickers con un número de serie único.
+     *
+     * @param serie El número de serie que identifica a este Snickers.
+     */
     public Snickers(int serie) {
         super(serie);
     }

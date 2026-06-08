@@ -12,6 +12,10 @@ public class Comprador {
     private int vuelto;
     private ArrayList<Moneda> billetera;
 
+    /**
+     * Construye un nuevo comprador con una billetera inicializada con 5 monedas de 1000 pesos.
+     * El comprador comienza sin haber consumido ningún producto.
+     */
     public Comprador(){
         this.sonido = null;
         this.billetera = new ArrayList<>();
@@ -23,6 +27,14 @@ public class Comprador {
         }
     }
 
+    /**
+     * Inicia el proceso de compra de un producto en la máquina expendedora.
+     * Extrae una moneda de la billetera, intenta comprar el producto seleccionado
+     * y recolecta el vuelto devuelto por la máquina.
+     *
+     * @param p   El tipo de producto que se desea comprar (del enum Precios).
+     * @param exp La máquina expendedora donde se realizará la compra.
+     */
     public void iniciarCompra(Precios p, Expendedor exp){
         if(billetera.isEmpty()){
             System.out.println("Te quedaste sin dinero..");
@@ -54,6 +66,12 @@ public class Comprador {
 
     }
 
+    /**
+     * Calcula el total de dinero disponible actualmente en la billetera del comprador.
+     * Suma el valor de todas las monedas que posee.
+     *
+     * @return El monto total de dinero en la billetera, en pesos.
+     */
     public int cuantoVuelto() {
         int dinero = 0;
         for(int i = 0; i < billetera.size(); i++){

@@ -5,6 +5,11 @@ package Backend;
  */
 class Chicle extends Dulce {
 
+    /**
+     * Construye una nueva instancia de Chicle con un número de serie único.
+     *
+     * @param serie El número de serie que identifica a este Chicle.
+     */
     public Chicle(int serie) {
         super(serie);
     }

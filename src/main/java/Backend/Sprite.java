@@ -5,6 +5,11 @@ package Backend;
  */
 class Sprite extends Bebida {
 
+    /**
+     * Construye una nueva instancia de Sprite con un número de serie único.
+     *
+     * @param serie El número de serie que identifica a esta Sprite.
+     */
     public Sprite(int serie) {
         super(serie);
     }

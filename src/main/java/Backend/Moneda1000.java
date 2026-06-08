@@ -6,6 +6,8 @@ package Backend;
 public class Moneda1000 extends Moneda {
     /**
      * Construye una nueva moneda de 1000 pesos.
+     *
+     * @param serie El número de serie que identifica a esta moneda.
      */
     public Moneda1000(int serie) {
         super(serie);

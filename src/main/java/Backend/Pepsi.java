@@ -5,6 +5,11 @@ package Backend;
  */
 class Pepsi extends Bebida {
 
+    /**
+     * Construye una nueva instancia de Pepsi con un número de serie único.
+     *
+     * @param serie El número de serie que identifica a esta Pepsi.
+     */
     public Pepsi(int serie) {
         super(serie);
     }

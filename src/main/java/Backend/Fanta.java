@@ -5,6 +5,11 @@ package Backend;
  */
 class Fanta extends Bebida {
 
+    /**
+     * Construye una nueva instancia de Fanta con un número de serie único.
+     *
+     * @param serie El número de serie que identifica a esta Fanta.
+     */
     public Fanta(int serie) {
         super(serie);
     }
