@@ -22,7 +22,7 @@ public class Menu extends JFrame implements ActionListener{
      * Inicializa todos los componentes visuales de la ventana:
      * la imagen de la expendedora, el ícono de la ventana, el título,
      * el botón de inicio con su imagen y fuente personalizada,
-     * y el label con el título de la simulación.
+     * y el label con el título de la simulación usando un ttf aparte.
      */
     public Menu() {
         this.setLayout(null);
