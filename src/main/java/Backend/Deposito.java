@@ -37,4 +37,20 @@ public class Deposito<T> {
         }
         return lista.remove(0);
     }
+    /**
+     * Permite ver la cantidad de elementos en el depósito (útil para la interfaz gráfica).
+     * @return el tamaño de la lista.
+     */
+    public int getSize() {
+        return lista.size();
+    }
+
+    /**
+     * Permite mirar un elemento específico sin sacarlo del depósito (útil para dibujar).
+     * @param i el índice del elemento.
+     * @return el elemento en la posición i.
+     */
+    public T getItem(int i) {
+        return lista.get(i);
+    }
 }
