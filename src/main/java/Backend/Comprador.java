@@ -59,7 +59,7 @@ public class Comprador {
         Moneda vuelto = exp.getVuelto();
 
         while(vuelto != null){
-            billetera.add(exp.getVuelto());
+            billetera.add(vuelto);
             vuelto = exp.getVuelto();
         }
 
