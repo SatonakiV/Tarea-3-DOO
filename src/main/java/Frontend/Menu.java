@@ -148,7 +148,7 @@ public class Menu extends JFrame implements ActionListener{
 
             /**
              * Cambia el color de fondo del botón a un tono más claro cuando
-             * el cursor entra en su área, dando retroalimentación visual al usuario.
+             * el cursor entra en su área, dando iluminación al entrar en el área de click
              *
              * @param evt El evento de mouse generado al entrar el cursor.
              */
