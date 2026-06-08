@@ -5,11 +5,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Ventana principal de bienvenida de la aplicación de la máquina expendedora.
+ * Muestra una imagen decorativa de la expendedora, el título de la simulación
+ * y un botón para iniciar la aplicación. Al presionar el botón, esta ventana
+ * se cierra y se abre la ventana principal de la simulación.
+ */
 public class Menu extends JFrame implements ActionListener{
 
+    /** Botón que inicia la simulación y abre la ventana principal. */
     JButton inicio;
 
 
+    /**
+     * Construye y configura el menú principal de la aplicación.
+     * Inicializa todos los componentes visuales de la ventana:
+     * la imagen de la expendedora, el ícono de la ventana, el título,
+     * el botón de inicio con su imagen y fuente personalizada,
+     * y el label con el título de la simulación.
+     */
     public Menu() {
         this.setLayout(null);
 
@@ -132,10 +146,22 @@ public class Menu extends JFrame implements ActionListener{
 
         inicio.addMouseListener(new java.awt.event.MouseAdapter() {
 
+            /**
+             * Cambia el color de fondo del botón a un tono más claro cuando
+             * el cursor entra en su área, dando retroalimentación visual al usuario.
+             *
+             * @param evt El evento de mouse generado al entrar el cursor.
+             */
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 inicio.setBackground(new Color(70, 70, 70));
             }
 
+            /**
+             * Restaura el color de fondo original del botón cuando
+             * el cursor sale de su área.
+             *
+             * @param evt El evento de mouse generado al salir el cursor.
+             */
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 inicio.setBackground(new Color(30, 30, 30));
             }
@@ -161,6 +187,13 @@ public class Menu extends JFrame implements ActionListener{
     }
 
 
+    /**
+     * Maneja los eventos de acción generados por los componentes de esta ventana.
+     * Al presionar el botón inicio, cierra el menú y abre la ventana principal
+     * de la simulación.
+     *
+     * @param e El evento de acción generado por el componente que fue activado.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == inicio){
