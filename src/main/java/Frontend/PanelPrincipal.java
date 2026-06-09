@@ -14,7 +14,11 @@ public class PanelPrincipal extends JPanel implements MouseListener, MouseMotion
     private Comprador clienteLogico;
     private PanelExpendedor exp;
     private PanelComprador com;
-
+    /**
+     * Inicializa todo el panel con un color de fondo
+     * crea las partes logicas de la maquina y el cliente
+     * y activa el detector de clics y de movimiento del mouse para los tooltips.
+     */
     public PanelPrincipal() {
         this.setBackground(new Color(237, 240, 240));
 
@@ -49,14 +53,20 @@ public class PanelPrincipal extends JPanel implements MouseListener, MouseMotion
 
         return super.getToolTipText(e);
     }
-
+    /**
+     * Dibuja el fondo y le avisa a los paneles del expendedor y comprador que se dibujen.
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         exp.paintComponent(g);
         com.paintComponent(g);
     }
-
+    /**
+     * Detecta donde hiciste clic en la pantalla
+     * si le da al cajon saca el producto o el vuelto
+     * sino le pasa el clic a los menus para que hagan lo suyo.
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         int x = e.getX();
@@ -81,7 +91,10 @@ public class PanelPrincipal extends JPanel implements MouseListener, MouseMotion
 
         this.repaint();
     }
-
+    /**
+     * ve si el mouse se esta moviendo por encima de los botones
+     * sirve para el efecto de hover y repinta la pantalla si es necesario.
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         boolean cambio = com.actualizarHover(e.getX(), e.getY());
