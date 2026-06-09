@@ -23,7 +23,10 @@ public class PanelComprador {
     private Image imagenBotonMenu;
     private Image imagenCoca, imagenPepsi, imagenSprite, imagenFanta, imagenKem;
     private Image imagenSuper8, imagenSnickers, imagenOrbit, imagenKitkat, imagenChocman;
-
+    /**
+     * Constructor que inicializa el panel y lo enlaza con la logica del expendedor y del cliente
+     * se encarga de cargar en memoria todas las imagenes necesarias para los botones y los productos.
+     */
     public PanelComprador(Expendedor exp, Comprador cliente) {
         this.exp = exp;
         this.cliente = cliente;
@@ -44,7 +47,10 @@ public class PanelComprador {
             System.err.println("Error al cargar imágenes del panel comprador: " + e.getMessage());
         }
     }
-
+    /**
+     * Metodo principal de dibujo que renderiza toda la interfaz del comprador
+     * incluye el titulo superior, el saldo actual, los menus de seleccion y el monedero en la parte inferior.
+     */
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -75,7 +81,9 @@ public class PanelComprador {
         // Dibujar el Monedero en la parte inferior
         dibujarMonedero(g);
     }
-
+    /**
+     * Dibuja los botones principales para elegir entre las categorias disponibles de la maquina.
+     */
     private void dibujarMenuPrincipal(Graphics g) {
         g.setFont(new Font("Arial", Font.BOLD, 22));
         g.drawImage(imagenBotonMenu, 570, 120, 340, 150, null);
@@ -94,7 +102,9 @@ public class PanelComprador {
         g.setColor(Color.WHITE);
         g.drawString("Dulces", 700, 370);
     }
-
+    /**
+     * Renderiza la cuadricula con las tarjetas correspondientes a las bebidas y sus respectivos precios.
+     */
     private void dibujarMenuBebestibles(Graphics g) {
         dibujarProducto(g, imagenCoca, "CocaCola", "$1000", 570, 120, false, hoverBoton == 1);
         dibujarProducto(g, imagenPepsi, "Pepsi", "$1000", 690, 120, false, hoverBoton == 2);
@@ -103,7 +113,9 @@ public class PanelComprador {
         dibujarProducto(g, imagenKem, "Kem", "$1000", 750, 280, false, hoverBoton == 5);
         dibujarBotonVolver(g);
     }
-
+    /**
+     * Renderiza la cuadricula con las tarjetas correspondientes a los dulces y sus respectivos precios.
+     */
     private void dibujarMenuDulces(Graphics g) {
         dibujarProducto(g, imagenSuper8, "Super 8", "$300", 570, 120, true, hoverBoton == 1);
         dibujarProducto(g, imagenSnickers, "Snickers", "$800", 690, 120, true, hoverBoton == 2);
@@ -112,7 +124,10 @@ public class PanelComprador {
         dibujarProducto(g, imagenChocman, "Chocman", "$600", 750, 280, true, hoverBoton == 5);
         dibujarBotonVolver(g);
     }
-
+    /**
+     * Metodo auxiliar que genera la visualizacion de un producto individual dentro de una tarjeta
+     * aplica un efecto de iluminacion si el cursor se encuentra sobre ella.
+     */
     private void dibujarProducto(Graphics g, Image imagen, String nombre, String precio, int x, int y, boolean esDulce, boolean hovered) {
         g.setColor(hovered ? new Color(245, 245, 250) : Color.white);
         g.fillRoundRect(x, y, 80, 140, 15, 15);
@@ -129,7 +144,9 @@ public class PanelComprador {
         g.setColor(new Color(0, 100, 0));
         g.drawString(precio, x + 18, y + 135);
     }
-
+    /**
+     * Dibuja el boton inferior que permite retornar al menu principal de seleccion.
+     */
     private void dibujarBotonVolver(Graphics g) {
         g.setFont(new Font("Arial", Font.BOLD, 14));
         g.setColor(hoverBoton == 6 ? new Color(130, 130, 130) : Color.DARK_GRAY);
@@ -139,7 +156,8 @@ public class PanelComprador {
     }
 
     /**
-     * Dibuja las monedas de la billetera en la parte inferior del panel.
+     * Muestra visualmente las monedas de la billetera en la seccion inferior del panel
+     * resalta con un borde de color verde la moneda que el usuario selecciono para pagar.
      */
     private void dibujarMonedero(Graphics g) {
         g.setFont(new Font("Arial", Font.BOLD, 12));
@@ -178,7 +196,10 @@ public class PanelComprador {
             g.drawString("$" + m.getValor(), x + offsetX, y + 24);
         }
     }
-
+    /**
+     * Identifica la posicion del cursor para cambiar la variable de estado visual de los botones
+     * esto permite generar un efecto de interaccion cuando el usuario pasa el mouse.
+     */
     public boolean actualizarHover(int x, int y) {
         hoverBoton = 0;
         if(menuActual == 0) {
@@ -216,7 +237,10 @@ public class PanelComprador {
         }
         return null;
     }
-    
+    /**
+     * Evalua las coordenadas registradas al hacer clic en el panel
+     * permite seleccionar una moneda del inventario inferior o intentar concretar una compra en los menus.
+     */
     public void procesarClic(int x, int y) {
         // Verificar si el clic fue en el monedero
         if (y >= 505) {
@@ -259,7 +283,10 @@ public class PanelComprador {
             if (x >= 580 && x <= 900 && y >= 430 && y <= 465) menuActual = 0;
         }
     }
-
+    /**
+     * Valida que exista una moneda previamente seleccionada antes de procesar el pago
+     * si es valido descuenta la moneda de la billetera y procede con la compra.
+     */
     private void intentarCompra(Precios producto) {
         // Validación: Asegurarse de que el usuario seleccionó una moneda antes
         if (indiceMonedaSeleccionada != -1 && indiceMonedaSeleccionada < cliente.getBilletera().size()) {
