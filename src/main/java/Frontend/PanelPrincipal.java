@@ -44,11 +44,27 @@ public class PanelPrincipal extends JPanel implements MouseListener, MouseMotion
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // Se procesa el clic en ambos paneles
-        com.procesarClic(e.getX(), e.getY());
-        exp.procesarClic(e.getX(), e.getY());
+        int x = e.getX();
+        int y = e.getY();
 
-        // Forzamos el redibujado de la interfaz para actualizar stocks y billetera
+        // 1. Zona de clic para el Cajón de Salida (Producto)
+        if (x >= 150 && x <= 350 && y >= 500 && y <= 600) {
+            clienteLogico.recogerProducto(expLogico);
+            if(clienteLogico.queConsumiste() != null) {
+                System.out.println("Sabor consumido: " + clienteLogico.queConsumiste());
+            }
+        }
+        // 2. Zona de clic para el Vuelto (Monedas)
+        else if (x >= 390 && x <= 460 && y >= 500 && y <= 580) {
+            clienteLogico.recogerVuelto(expLogico);
+        }
+        // 3. Cualquier otro clic se envía a los paneles normales
+        else {
+            com.procesarClic(x, y);
+            exp.procesarClic(x, y);
+        }
+
+        // Forzamos el redibujado de la interfaz
         this.repaint();
     }
 

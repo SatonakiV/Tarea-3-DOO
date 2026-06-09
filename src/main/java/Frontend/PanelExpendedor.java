@@ -17,8 +17,6 @@ public class PanelExpendedor {
             java.net.URL urlDinero = getClass().getResource("/dinero.png");
             if(urlDinero != null) {
                 imagenDinero = ImageIO.read(urlDinero);
-            } else {
-                System.err.println("Error al obtener imagen dinero...");
             }
         } catch(Exception e) {
             System.err.println("Error al obtener imagen dinero..." + e.getMessage());
@@ -40,44 +38,50 @@ public class PanelExpendedor {
             g.fillRect(50, 50, 400, 550);
         }
 
-        // 2. Distribución Centrada 4 - 4 - 2 (Dentro del cristal)
-        // He movido el eje X inicial de 70 a 90 para dar margen al borde izquierdo
-        // He reducido el espacio entre columnas de 85 a 80 para que el bloque de 4 quepa mejor
-
-        // Fila 1
+        // 2. Dibujar Estantes
         dibujarDeposito(g, expLogico.getDepositoCoca(), 90, 100);
         dibujarDeposito(g, expLogico.getDepositoPepsi(), 170, 100);
         dibujarDeposito(g, expLogico.getDepositoSprite(), 250, 100);
         dibujarDeposito(g, expLogico.getDepositoFanta(), 330, 100);
 
-        // Fila 2
         dibujarDeposito(g, expLogico.getDepositoKem(), 90, 250);
         dibujarDeposito(g, expLogico.getDepositoSnickers(), 170, 250);
         dibujarDeposito(g, expLogico.getDepositoKitkat(), 250, 250);
         dibujarDeposito(g, expLogico.getDepositoSuper8(), 330, 250);
 
-        // Fila 3
         dibujarDeposito(g, expLogico.getDepositoChocman(), 90, 400);
         dibujarDeposito(g, expLogico.getDepositoChicle(), 170, 400);
 
-        // 3. UI
-        g.setFont(new Font("Arial", Font.BOLD, 18));
-        g.setColor(new Color(30, 28, 28));
-        g.drawString("Saldo: $4000", 810, 56);
+        // 3. Dibujar Producto en el Cajón de Salida (Compuerta inferior)
+        Backend.Producto pSalida = expLogico.verProductoEnCajon();
+        if (pSalida != null) {
+            pSalida.setXY(220, 520); // Coordenadas centradas en el cajón de tu imagen
+            pSalida.paintComponent(g);
+        }
+
+        // 4. Dibujar Monedas en la ranura de Vuelto (Derecha inferior)
+        Backend.Deposito<Backend.Moneda> depVuelto = expLogico.getDepositoVuelto();
+        if (depVuelto != null && depVuelto.getSize() > 0) {
+            if (imagenDinero != null) {
+                g.drawImage(imagenDinero, 400, 510, 40, 40, null);
+            } else {
+                g.setColor(new Color(255, 215, 0)); // Dorado genérico
+                g.fillOval(400, 510, 30, 30);
+            }
+            // Indicador numérico de cuántas monedas hay acumuladas
+            g.setColor(new Color(255, 50, 50));
+            g.fillOval(425, 500, 20, 20);
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Arial", Font.BOLD, 10));
+            g.drawString(String.valueOf(depVuelto.getSize()), 432, 514);
+        }
     }
 
-    /**
-     * Helper que dibuja un contenedor de vidrio y apila los productos adentro.
-     * Reposiciona cada producto dinámicamente cumpliendo la regla de la Tarea 3.
-     */
     private void dibujarDeposito(Graphics g, Backend.Deposito<Backend.Producto> dep, int startX, int startY) {
         if (dep == null || dep.getSize() == 0) return;
 
-        // Obtenemos el producto para copiar su estilo
         Backend.Producto pFrontal = dep.getItem(0);
 
-        // 1. Dibujamos los "stack" detrás con el mismo color, pero un poco más oscuros
-        // para que se note que están detrás (usando Alpha 150)
         if (dep.getSize() > 1) {
             g.setColor(new Color(40, 40, 40, 150));
             g.fillRoundRect(startX + 4, startY + 4, 35, 50, 8, 8);
@@ -87,35 +91,22 @@ public class PanelExpendedor {
             g.fillRoundRect(startX + 2, startY + 2, 35, 50, 8, 8);
         }
 
-        // 2. El producto principal al frente (el que tiene todo el color y detalle)
         pFrontal.setXY(startX, startY);
         pFrontal.paintComponent(g);
 
-        // 3. El contador de stock (Badge)
         g.setColor(new Color(255, 50, 50));
         g.fillOval(startX + 25, startY - 5, 20, 20);
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 10));
+        
         g.drawString(String.valueOf(dep.getSize()), startX + 31, startY + 9);
     }
 
-    /**
-     * Verifica si el mouse está sobre alguna zona interactiva de la máquina.
-     * Por ahora la máquina no tiene botones que brillen, así que retorna false.
-     */
     public boolean actualizarHover(int x, int y) {
         return false;
     }
 
-    /**
-     * Procesa los clics que ocurren sobre el expendedor.
-     * Según el PDF: Si se hace click en el expendedor, se rellenan los depósitos.
-     */
     public void procesarClic(int x, int y) {
-        // Asumiendo que la imagen de la máquina está entre x:50-470 y y:20-640
-        if(x >= 50 && x <= 470 && y >= 20 && y <= 640) {
-            System.out.println("¡Clic en la máquina! Aquí debemos llamar al método de rellenar productos.");
-            // Próximo paso: expLogico.rellenarDepositos();
-        }
+        // Dejaremos el rellenado para el paso 4.
     }
 }
