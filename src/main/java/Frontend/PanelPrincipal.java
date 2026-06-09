@@ -1,68 +1,68 @@
-package Frontend;
+ package Frontend;
 
 import Backend.Expendedor;
+import Backend.Comprador;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
+/**
+ * Panel principal que contiene la maquina expendedora y el panel de seleccion.
+ * Gestiona la interaccion entre la logica del expendedor, el comprador y las interfaces graficas.
+ */
 public class PanelPrincipal extends JPanel implements MouseListener, MouseMotionListener {
+    private Expendedor expLogico;
+    private Comprador clienteLogico;
     private PanelExpendedor exp;
     private PanelComprador com;
-    private Expendedor expendedorLogico;
 
+    /**
+     * Construye el panel principal inicializando la lógica del expendedor,
+     * el comprador y vinculándolos a sus respectivos paneles visuales.
+     */
     public PanelPrincipal() {
         this.setBackground(new Color(237, 240, 240));
 
-        expendedorLogico = new Expendedor(5);
-        exp = new PanelExpendedor(expendedorLogico);
-        com = new PanelComprador();
+        // 1. Inicializamos los componentes lógicos del sistema
+        expLogico = new Expendedor(5);
+        clienteLogico = new Comprador();
+
+        // 2. Pasamos las referencias correspondientes a los paneles visuales
+        exp = new PanelExpendedor(expLogico);
+        com = new PanelComprador(expLogico, clienteLogico);
 
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        com.paintComponent(g);
         exp.paintComponent(g);
+        com.paintComponent(g);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
+        // Se procesa el clic en ambos paneles
+        com.procesarClic(e.getX(), e.getY());
+        exp.procesarClic(e.getX(), e.getY());
 
-       
-        com.procesarClic(x, y);
-        exp.procesarClic(x, y);
-
+        // Forzamos el redibujado de la interfaz para actualizar stocks y billetera
         this.repaint();
     }
 
     @Override
-    public void mouseMoved (MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
-
-
-        boolean sobreBotonComprador = com.actualizarHover(x, y);
-        boolean sobreBotonExpendedor = exp.actualizarHover(x, y);
-
-        if(sobreBotonComprador || sobreBotonExpendedor) {
-            this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        } else {
-            this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    public void mouseMoved(MouseEvent e) {
+        boolean cambio = com.actualizarHover(e.getX(), e.getY());
+        if (cambio) {
+            repaint();
         }
-
-        this.repaint();
     }
 
     @Override public void mousePressed(MouseEvent e) {}
-    @Override public void mouseDragged(MouseEvent e) {}
     @Override public void mouseReleased(MouseEvent e) {}
     @Override public void mouseEntered(MouseEvent e) {}
     @Override public void mouseExited(MouseEvent e) {}
+    @Override public void mouseDragged(MouseEvent e) {}
 }
