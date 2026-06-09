@@ -156,5 +156,16 @@ public class Expendedor {
     }
 
 
-
+    // Getters para que la interfaz gráfica pueda "mirar" los depósitos
+    public Deposito<Producto> getDepositoCoca() { return depositoCoca; }
+    public Deposito<Producto> getDepositoSprite() { return depositoSprite; }
+    public Deposito<Producto> getDepositoPepsi() { return depositoPepsi; }
+    public Deposito<Producto> getDepositoKem() { return depositoKem; }
+    public Deposito<Producto> getDepositoFanta() { return depositoFanta; }
+    public Deposito<Producto> getDepositoSuper8() { return depositoSuper8; }
+    public Deposito<Producto> getDepositoKitkat() { return depositoKitkat; }
+    public Deposito<Producto> getDepositoSnickers() { return depositoSnickers; }
+    public Deposito<Producto> getDepositoChicle() { return depositoChicle; }
+    public Deposito<Producto> getDepositoChocman() { return depositoChocman; }
+    public Deposito<Moneda> getDepositoVuelto() { return depositoVuelto; }
 }
