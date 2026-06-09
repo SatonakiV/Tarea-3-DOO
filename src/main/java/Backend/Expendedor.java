@@ -166,4 +166,15 @@ public class Expendedor {
     public Deposito<Producto> getDepositoChicle() { return depositoChicle; }
     public Deposito<Producto> getDepositoChocman() { return depositoChocman; }
     public Deposito<Moneda> getDepositoVuelto() { return depositoVuelto; }
+    /**
+     * Permite a la interfaz gráfica ver qué producto está en el cajón
+     * sin retirarlo de la máquina.
+     */
+    public Producto verProductoEnCajon() {
+        Producto p = deposito.getProducto(); // Lo sacamos temporalmente
+        if (p != null) {
+            deposito.setProducto(p); // Lo volvemos a meter inmediatamente
+        }
+        return p;
+    }
 }
