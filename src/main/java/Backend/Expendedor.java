@@ -43,23 +43,21 @@ public class Expendedor {
         this.monedas = new Deposito<>();
         this.deposito = new DepositoUnico<>();
 
-        int contador = 0;
-
-        //For para instanciar hasta x cantidad de acuerdo lo pedido
+        // Llenamos la máquina asignando series únicas por "Lote" a cada producto
         for(int i = 0; i < cantidad; i++) {
-            depositoCoca.addElemento(new Cocacola(contador++));
-            depositoSprite.addElemento(new Sprite(contador++));
-            depositoPepsi.addElemento(new Pepsi(contador++));
-            depositoKem.addElemento(new Kem(contador++));
-            depositoFanta.addElemento(new Fanta(contador++));
-            depositoSnickers.addElemento(new Snickers(contador++));
-            depositoSuper8.addElemento(new Super8(contador++));
-            depositoKitkat.addElemento(new Kitkat(contador++));
-            depositoChicle.addElemento(new Chicle(contador++));
-            depositoChocman.addElemento(new Chocman(contador++));
+            depositoCoca.addElemento(new Cocacola(100 + i));
+            depositoPepsi.addElemento(new Pepsi(200 + i));
+            depositoSprite.addElemento(new Sprite(300 + i));
+            depositoFanta.addElemento(new Fanta(400 + i));
+            depositoKem.addElemento(new Kem(500 + i));
+
+            depositoSuper8.addElemento(new Super8(600 + i));
+            depositoSnickers.addElemento(new Snickers(700 + i));
+            depositoKitkat.addElemento(new Kitkat(800 + i));
+            depositoChocman.addElemento(new Chocman(900 + i));
+            depositoChicle.addElemento(new Chicle(1000 + i));
         }
     }
-
     /**
      * Intenta realizar la compra de un producto en la máquina expendedora.
      * Verifica que la moneda sea válida, que el pago sea suficiente y que exista stock.

@@ -1,4 +1,5 @@
 package Backend;
+
 import java.awt.*;
 
 /**
@@ -6,9 +7,12 @@ import java.awt.*;
  * sirve para agrupar a cualquier moneda de cualquier valor, nos permite
  * compararlas u ordenarlas de menor a mayor valor gracias a comparable.
  */
-
 public abstract class Moneda implements Comparable<Moneda> {
     private int serie;
+
+    // NUEVAS PROPIEDADES PARA LA TAREA 3
+    protected int x;
+    protected int y;
 
     /**
      * Construye una nueva moneda como base.
@@ -35,33 +39,13 @@ public abstract class Moneda implements Comparable<Moneda> {
      */
     public abstract int getValor();
 
-    /**
-     * Obtiene un identificador único para la moneda
-     * como en la vida real cada moneda es distinta, usamos su espacio en la memoria (ToString)
-     * para simular que hay un número de serie.
-     *
-     * @return Un String que representa la serie de la moneda.
-     */
-
-    /**
-     * Compara el valor de esta moneda con el de otra que le pasemos.
-     * Así la máquina o el comprador puede saber fácilmente cuál vale más.
-     *
-     * @param m la moneda con la que queremos comparar.
-     * @return Un numero negativo si esta vale menos, 0 si valen lo mismo, o positivo si vale más.
-     */
-    @Override
-    public int compareTo(Moneda m) {
-        return Integer.compare(this.getValor(), m.getValor());
-    }
-    protected int x;
-    protected int y;
-
+    // Método para actualizar la posición en la interfaz gráfica
     public void setXY(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    // Método para que la moneda se dibuje a sí misma (Tarea 3)
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -84,5 +68,17 @@ public abstract class Moneda implements Comparable<Moneda> {
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Arial", Font.BOLD, 10));
         g2d.drawString(String.valueOf(getValor()), x + 5, y + 20);
+    }
+
+    /**
+     * Compara el valor de esta moneda con el de otra que le pasemos.
+     * Así la máquina o el comprador puede saber fácilmente cuál vale más.
+     *
+     * @param m la moneda con la que queremos comparar.
+     * @return Un numero negativo si esta vale menos, 0 si valen lo mismo, o positivo si vale más.
+     */
+    @Override
+    public int compareTo(Moneda m) {
+        return Integer.compare(this.getValor(), m.getValor());
     }
 }
