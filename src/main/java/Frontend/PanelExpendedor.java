@@ -4,12 +4,18 @@ import Backend.Expendedor;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * Panel grafico encargado de dibujar la interfaz de la maquina expendedora
+ * Gestiona la visualizacion de los productos, el deposito de monedas y el cajon de salida.
+ */
 public class PanelExpendedor {
     private Expendedor expLogico;
     private Image imagenMaquina;
     private Image imagenDinero;
-
+    /**
+     * Constructor que enlaza el panel con la logica del expendedor
+     * Se encarga de cargar las imagenes necesarias en memoria como la vista frontal y el icono del vuelto.
+     */
     public PanelExpendedor(Expendedor exp) {
         this.expLogico = exp;
 
@@ -28,7 +34,10 @@ public class PanelExpendedor {
             System.out.println("Error al cargar la imagen Exp_Frontal.png");
         }
     }
-
+    /**
+     * Metodo principal de dibujo que renderiza el fondo de la maquina
+     * Tambien dibuja los estantes con sus respectivos productos, el articulo dispensado y el dinero acumulado.
+     */
     public void paintComponent(Graphics g) {
         // 1. Fondo
         if (imagenMaquina != null) {
@@ -76,7 +85,10 @@ public class PanelExpendedor {
             g.drawString(String.valueOf(depVuelto.getSize()), 432, 514);
         }
     }
-
+    /**
+     * Metodo auxiliar para dibujar cada deposito de inventario
+     * Genera un efecto visual de apilamiento si hay más de un elemento y agrega un indicador con la cantidad disponible.
+     */
     private void dibujarDeposito(Graphics g, Backend.Deposito<Backend.Producto> dep, int startX, int startY) {
         if (dep == null || dep.getSize() == 0) return;
 
@@ -125,7 +137,10 @@ public class PanelExpendedor {
 
         return null;
     }
-
+    /**
+     * Detecta las interacciones del usuario en el area superior de la maquina
+     * Al recibir un clic en esta zona ejecuta la instruccion para rellenar todos los productos.
+     */
     public void procesarClic(int x, int y) {
         // Evitamos la zona del cajón inferior para no sobreponer clics
         if(x >= 50 && x <= 470 && y >= 20 && y <= 490) {
