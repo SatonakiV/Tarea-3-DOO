@@ -32,7 +32,7 @@ public class PanelExpendedor {
     }
 
     public void paintComponent(Graphics g) {
-        // 1. Dibuja el fondo y la imagen principal de la máquina
+        // 1. Fondo
         if (imagenMaquina != null) {
             g.drawImage(imagenMaquina, 50, 20, 420, 620, null);
         } else {
@@ -40,30 +40,27 @@ public class PanelExpendedor {
             g.fillRect(50, 50, 400, 550);
         }
 
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        // 2. Distribución Centrada 4 - 4 - 2 (Dentro del cristal)
+        // He movido el eje X inicial de 70 a 90 para dar margen al borde izquierdo
+        // He reducido el espacio entre columnas de 85 a 80 para que el bloque de 4 quepa mejor
 
-        // 2. MAGIA: Dibujar el interior de los estantes
-        // Estante de arriba (Bebidas)
-        dibujarDeposito(g, expLogico.getDepositoCoca(), 85, 100);
-        dibujarDeposito(g, expLogico.getDepositoPepsi(), 145, 100);
-        dibujarDeposito(g, expLogico.getDepositoSprite(), 205, 100);
-        dibujarDeposito(g, expLogico.getDepositoFanta(), 265, 100);
-        dibujarDeposito(g, expLogico.getDepositoKem(), 325, 100);
+        // Fila 1
+        dibujarDeposito(g, expLogico.getDepositoCoca(), 90, 100);
+        dibujarDeposito(g, expLogico.getDepositoPepsi(), 170, 100);
+        dibujarDeposito(g, expLogico.getDepositoSprite(), 250, 100);
+        dibujarDeposito(g, expLogico.getDepositoFanta(), 330, 100);
 
-        // Estante de abajo (Dulces)
-        dibujarDeposito(g, expLogico.getDepositoSuper8(), 85, 330);
-        dibujarDeposito(g, expLogico.getDepositoSnickers(), 145, 330);
-        dibujarDeposito(g, expLogico.getDepositoKitkat(), 205, 330);
-        dibujarDeposito(g, expLogico.getDepositoChocman(), 265, 330);
-        dibujarDeposito(g, expLogico.getDepositoChicle(), 325, 330);
+        // Fila 2
+        dibujarDeposito(g, expLogico.getDepositoKem(), 90, 250);
+        dibujarDeposito(g, expLogico.getDepositoSnickers(), 170, 250);
+        dibujarDeposito(g, expLogico.getDepositoKitkat(), 250, 250);
+        dibujarDeposito(g, expLogico.getDepositoSuper8(), 330, 250);
 
+        // Fila 3
+        dibujarDeposito(g, expLogico.getDepositoChocman(), 90, 400);
+        dibujarDeposito(g, expLogico.getDepositoChicle(), 170, 400);
 
-        // 3. Dibujar UI Adicional
-        if(imagenDinero != null){
-            g.drawImage(imagenDinero, 770, 35, 30, 30, null);
-        }
-
+        // 3. UI
         g.setFont(new Font("Arial", Font.BOLD, 18));
         g.setColor(new Color(30, 28, 28));
         g.drawString("Saldo: $4000", 810, 56);
@@ -74,23 +71,32 @@ public class PanelExpendedor {
      * Reposiciona cada producto dinámicamente cumpliendo la regla de la Tarea 3.
      */
     private void dibujarDeposito(Graphics g, Backend.Deposito<Backend.Producto> dep, int startX, int startY) {
-        if (dep == null) return;
+        if (dep == null || dep.getSize() == 0) return;
 
-        // Dibuja el fondo de vidrio del carril
-        g.setColor(new Color(30, 30, 30, 100)); // Negro semi-transparente
-        g.fillRect(startX - 5, startY - 5, 45, 230);
+        // Obtenemos el producto para copiar su estilo
+        Backend.Producto pFrontal = dep.getItem(0);
 
-        // Apila los productos desde abajo hacia arriba
-        for (int i = 0; i < dep.getSize(); i++) {
-            Backend.Producto p = dep.getItem(i);
-
-            // Calculamos la posición relativa (mientras más productos, se apilan más arriba)
-            int itemY = startY + 175 - (i * 35);
-
-            // Cumplimos el requisito del PDF: Usar setXY y luego paintComponent
-            p.setXY(startX, itemY);
-            p.paintComponent(g);
+        // 1. Dibujamos los "stack" detrás con el mismo color, pero un poco más oscuros
+        // para que se note que están detrás (usando Alpha 150)
+        if (dep.getSize() > 1) {
+            g.setColor(new Color(40, 40, 40, 150));
+            g.fillRoundRect(startX + 4, startY + 4, 35, 50, 8, 8);
         }
+        if (dep.getSize() > 2) {
+            g.setColor(new Color(40, 40, 40, 150));
+            g.fillRoundRect(startX + 2, startY + 2, 35, 50, 8, 8);
+        }
+
+        // 2. El producto principal al frente (el que tiene todo el color y detalle)
+        pFrontal.setXY(startX, startY);
+        pFrontal.paintComponent(g);
+
+        // 3. El contador de stock (Badge)
+        g.setColor(new Color(255, 50, 50));
+        g.fillOval(startX + 25, startY - 5, 20, 20);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 10));
+        g.drawString(String.valueOf(dep.getSize()), startX + 31, startY + 9);
     }
 
     /**
