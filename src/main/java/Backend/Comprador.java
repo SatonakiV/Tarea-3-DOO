@@ -22,20 +22,20 @@ public class Comprador {
 
     /**
      * Paso 1: Inserta la moneda y selecciona el producto.
-     * NO recoge el producto ni el vuelto todavía.
      */
     public void pagarProducto(Precios p, Expendedor exp, Moneda m){
         try{
             exp.comprarProducto(m, p);
-            // Si funciona, el producto y el vuelto se quedan esperando en la máquina
         }
         catch(NoHayProductoException | PagoInsuficienteException | PagoIncorrectoException e){
-            System.out.println(e.getMessage());
-            billetera.add(m); // Devolvemos la moneda a la billetera si la máquina la rechaza antes de tragarla
+            System.out.println("Máquina rechaza la compra: " + e.getMessage());
+            // ¡CORRECCIÓN DEL BUG!
+            // Ya no devolvemos la moneda a la billetera aquí.
+            // El Expendedor la envió a la bandeja de vuelto, así que el usuario
+            // debe hacer clic en el vuelto de la interfaz gráfica para recuperarla.
         }
         catch(Exception e){
             System.out.println("Un error inesperado ocurrió...");
-            billetera.add(m);
         }
     }
 
