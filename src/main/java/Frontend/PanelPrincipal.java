@@ -28,7 +28,6 @@ public class PanelPrincipal extends JPanel implements MouseListener, MouseMotion
         super.paintComponent(g);
         com.paintComponent(g);
         exp.paintComponent(g);
-
     }
 
     @Override
@@ -36,7 +35,9 @@ public class PanelPrincipal extends JPanel implements MouseListener, MouseMotion
         int x = e.getX();
         int y = e.getY();
 
+       
         com.procesarClic(x, y);
+        exp.procesarClic(x, y);
 
         this.repaint();
     }
@@ -46,13 +47,13 @@ public class PanelPrincipal extends JPanel implements MouseListener, MouseMotion
         int x = e.getX();
         int y = e.getY();
 
-        boolean sobreBoton = com.actualizarHover(x, y);
 
-        if(sobreBoton) {
+        boolean sobreBotonComprador = com.actualizarHover(x, y);
+        boolean sobreBotonExpendedor = exp.actualizarHover(x, y);
+
+        if(sobreBotonComprador || sobreBotonExpendedor) {
             this.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        }
-        else {
+        } else {
             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
 

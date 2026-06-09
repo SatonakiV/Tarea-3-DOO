@@ -155,7 +155,7 @@ public class PanelComprador {
             }
 
             if(x >= 580  && x <= 900 && y >= 480 && y <= 530){
-                hoverBoton = 1;
+                hoverBoton = 6;
             }
 
         }

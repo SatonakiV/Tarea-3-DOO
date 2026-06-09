@@ -60,4 +60,24 @@ public class PanelExpendedor {
         g.drawString("Saldo: $4000", 810, 56);
 
     }
+    /**
+     * Verifica si el mouse está sobre alguna zona interactiva de la máquina.
+     * Por ahora la máquina no tiene botones que brillen, así que retorna false.
+     */
+    public boolean actualizarHover(int x, int y) {
+        return false;
+    }
+
+    /**
+     * Procesa los clics que ocurren sobre el expendedor.
+     * Según el PDF: Si se hace click en el expendedor, se rellenan los depósitos.
+     */
+    public void procesarClic(int x, int y) {
+        // Asumiendo que la imagen de la máquina está entre x:50-470 y y:20-640
+        if(x >= 50 && x <= 470 && y >= 20 && y <= 640) {
+            System.out.println("¡Clic en la máquina! Aquí debemos llamar al método de rellenar productos.");
+            // TODO: Crear un método en Expendedor.java que rellene los depósitos vacíos y llamarlo aquí:
+            // expLogico.rellenarDepositos();
+        }
+    }
 }
