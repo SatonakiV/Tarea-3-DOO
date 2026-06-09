@@ -1,4 +1,5 @@
 package Backend;
+import java.awt.*;
 
 /**
  * Representa una moneda genérica que el comprador usa para intentar pagar en la máquina,
@@ -52,5 +53,36 @@ public abstract class Moneda implements Comparable<Moneda> {
     @Override
     public int compareTo(Moneda m) {
         return Integer.compare(this.getValor(), m.getValor());
+    }
+    protected int x;
+    protected int y;
+
+    public void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Define el color dependiendo del valor (Oro, Plata, Bronce)
+        Color colorMoneda;
+        if (getValor() == 1000) colorMoneda = new Color(255, 215, 0);
+        else if (getValor() == 500) colorMoneda = new Color(192, 192, 192);
+        else colorMoneda = new Color(205, 127, 50);
+
+        // Sombra y Borde
+        g2d.setColor(colorMoneda.darker().darker());
+        g2d.fillOval(x, y, 32, 32);
+
+        // Brillo interior
+        g2d.setColor(colorMoneda);
+        g2d.fillOval(x + 2, y + 2, 28, 28);
+
+        // Valor de la moneda en el centro
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(new Font("Arial", Font.BOLD, 10));
+        g2d.drawString(String.valueOf(getValor()), x + 5, y + 20);
     }
 }
