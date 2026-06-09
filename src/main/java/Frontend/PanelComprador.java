@@ -196,7 +196,27 @@ public class PanelComprador {
         }
         return hoverBoton != 0;
     }
+    /**
+     * Devuelve el texto del ToolTip si el mouse está sobre una moneda de la billetera.
+     */
+    public String obtenerToolTip(int x, int y) {
+        if (y >= 505) {
+            java.util.ArrayList<Backend.Moneda> bill = cliente.getBilletera();
+            int cols = 8;
+            for (int i = 0; i < bill.size(); i++) {
+                int col = i % cols;
+                int row = i / cols;
+                int mx = 550 + (col * 45);
+                int my = 505 + (row * 45);
 
+                if (x >= mx && x <= mx + 40 && y >= my && y <= my + 40) {
+                    return "Moneda $" + bill.get(i).getValor() + " | Serie: " + bill.get(i).getSerie();
+                }
+            }
+        }
+        return null;
+    }
+    
     public void procesarClic(int x, int y) {
         // Verificar si el clic fue en el monedero
         if (y >= 505) {

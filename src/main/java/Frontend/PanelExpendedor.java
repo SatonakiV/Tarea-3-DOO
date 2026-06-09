@@ -106,7 +106,31 @@ public class PanelExpendedor {
         return false;
     }
 
+    /**
+     * Detecta si el usuario posicionó el mouse sobre el producto o moneda de vuelto
+     * para mostrar su número de serie en un ToolTip.
+     */
+    public String obtenerToolTip(int x, int y) {
+        // Verificar si el mouse está sobre el producto en el cajón de salida
+        Backend.Producto pSalida = expLogico.verProductoEnCajon();
+        if (pSalida != null && x >= 220 && x <= 280 && y >= 520 && y <= 610) {
+            return "Producto: " + pSalida.getClass().getSimpleName() + " | Serie: " + pSalida.getSerie();
+        }
+
+        // Verificar si el mouse está sobre la moneda en la bandeja de vuelto
+        Backend.Deposito<Backend.Moneda> depVuelto = expLogico.getDepositoVuelto();
+        if (depVuelto != null && depVuelto.getSize() > 0 && x >= 400 && x <= 440 && y >= 510 && y <= 550) {
+            return "Moneda devuelta | Serie: " + depVuelto.getItem(0).getSerie();
+        }
+
+        return null;
+    }
+
     public void procesarClic(int x, int y) {
-        // Dejaremos el rellenado para el paso 4.
+        // Evitamos la zona del cajón inferior para no sobreponer clics
+        if(x >= 50 && x <= 470 && y >= 20 && y <= 490) {
+            expLogico.rellenarDepositos();
+            System.out.println("¡Máquina Expendedora rellenada con éxito!");
+        }
     }
 }

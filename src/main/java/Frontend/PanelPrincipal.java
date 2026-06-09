@@ -1,4 +1,4 @@
- package Frontend;
+package Frontend;
 
 import Backend.Expendedor;
 import Backend.Comprador;
@@ -8,7 +8,6 @@ import java.awt.event.*;
 
 /**
  * Panel principal que contiene la maquina expendedora y el panel de seleccion.
- * Gestiona la interaccion entre la logica del expendedor, el comprador y las interfaces graficas.
  */
 public class PanelPrincipal extends JPanel implements MouseListener, MouseMotionListener {
     private Expendedor expLogico;
@@ -16,23 +15,39 @@ public class PanelPrincipal extends JPanel implements MouseListener, MouseMotion
     private PanelExpendedor exp;
     private PanelComprador com;
 
-    /**
-     * Construye el panel principal inicializando la lógica del expendedor,
-     * el comprador y vinculándolos a sus respectivos paneles visuales.
-     */
     public PanelPrincipal() {
         this.setBackground(new Color(237, 240, 240));
 
-        // 1. Inicializamos los componentes lógicos del sistema
+        // Inicializaciones lógicas
         expLogico = new Expendedor(5);
         clienteLogico = new Comprador();
 
-        // 2. Pasamos las referencias correspondientes a los paneles visuales
+        // Paneles visuales
         exp = new PanelExpendedor(expLogico);
         com = new PanelComprador(expLogico, clienteLogico);
 
+        // Listeners
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+
+        // Activamos la capacidad del panel para mostrar ToolTips
+        ToolTipManager.sharedInstance().setInitialDelay(100); // Aparece casi al instante
+        this.setToolTipText("");
+    }
+
+    /**
+     * Sobrescribe el método nativo de JPanel para devolver los tooltips
+     * basados en las coordenadas del mouse dentro de nuestros componentes dibujados.
+     */
+    @Override
+    public String getToolTipText(MouseEvent e) {
+        String textoExp = exp.obtenerToolTip(e.getX(), e.getY());
+        if (textoExp != null) return textoExp;
+
+        String textoCom = com.obtenerToolTip(e.getX(), e.getY());
+        if (textoCom != null) return textoCom;
+
+        return super.getToolTipText(e);
     }
 
     @Override
@@ -47,24 +62,23 @@ public class PanelPrincipal extends JPanel implements MouseListener, MouseMotion
         int x = e.getX();
         int y = e.getY();
 
-        // 1. Zona de clic para el Cajón de Salida (Producto)
+        // Clic en Cajón de Salida (Producto)
         if (x >= 150 && x <= 350 && y >= 500 && y <= 600) {
             clienteLogico.recogerProducto(expLogico);
             if(clienteLogico.queConsumiste() != null) {
                 System.out.println("Sabor consumido: " + clienteLogico.queConsumiste());
             }
         }
-        // 2. Zona de clic para el Vuelto (Monedas)
+        // Clic en Vuelto (Monedas)
         else if (x >= 390 && x <= 460 && y >= 500 && y <= 580) {
             clienteLogico.recogerVuelto(expLogico);
         }
-        // 3. Cualquier otro clic se envía a los paneles normales
+        // Procesar clic normal en paneles
         else {
             com.procesarClic(x, y);
             exp.procesarClic(x, y);
         }
 
-        // Forzamos el redibujado de la interfaz
         this.repaint();
     }
 

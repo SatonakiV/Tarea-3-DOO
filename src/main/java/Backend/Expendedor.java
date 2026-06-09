@@ -177,4 +177,21 @@ public class Expendedor {
         }
         return p;
     }
+    /**
+     * Rellena todos los depósitos hasta su capacidad inicial (5 unidades).
+     * Asigna un número de serie alto para diferenciar el relleno del stock original.
+     */
+    public void rellenarDepositos() {
+        int s = 9999; // Serie base para los productos de relleno
+        while(depositoCoca.getSize() < 5) depositoCoca.addElemento(new Cocacola(s++));
+        while(depositoPepsi.getSize() < 5) depositoPepsi.addElemento(new Pepsi(s++));
+        while(depositoSprite.getSize() < 5) depositoSprite.addElemento(new Sprite(s++));
+        while(depositoFanta.getSize() < 5) depositoFanta.addElemento(new Fanta(s++));
+        while(depositoKem.getSize() < 5) depositoKem.addElemento(new Kem(s++));
+        while(depositoSuper8.getSize() < 5) depositoSuper8.addElemento(new Super8(s++));
+        while(depositoSnickers.getSize() < 5) depositoSnickers.addElemento(new Snickers(s++));
+        while(depositoKitkat.getSize() < 5) depositoKitkat.addElemento(new Kitkat(s++));
+        while(depositoChocman.getSize() < 5) depositoChocman.addElemento(new Chocman(s++));
+        while(depositoChicle.getSize() < 5) depositoChicle.addElemento(new Chicle(s++));
+    }
 }

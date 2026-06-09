@@ -28,7 +28,7 @@ public abstract class Moneda implements Comparable<Moneda> {
      *
      * @return El número de serie de la moneda.
      */
-    public int getSeries(){
+    public int getSerie(){
         return serie;
     }
 
